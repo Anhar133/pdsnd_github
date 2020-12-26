@@ -208,23 +208,33 @@ def user_stats(df):
     except :
         pass
 
-def raw_data(df):
+def raw_data_first(df):
     check = ['yes','no']
 
     while True :
-        answer = input("Would you like to see 5 lines of raw data? enter yes or no\n ").lower()
+        answer = input("Would you like to see 5 lines of raw data from the first? enter yes or no\n ").lower()
         if answer not in check :
             print("please inter yes or no")
         elif answer == "yes" :
             print(df.head())
         else :
             break
+def raw_data_last(df):
+    check = ['yes','no']
 
+    while True :
+        answer = input("Would you like to see 5 lines of raw data from the last? enter yes or no\n ").lower()
+        if answer not in check :
+            print("please inter yes or no")
+        elif answer == "yes" :
+            print(df.tail())
+        else :
+            break
 
 def main():
     c = input("inter your name : ")
     while True:
-        city, month, day = get_filters()
+        city, month, day = get_filters(c)
         df = load_data(city, month, day)
 
         time_stats(df)
@@ -232,7 +242,8 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
-        raw_data(df)
+        raw_data_first(df)
+        raw_data_last(df)
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
