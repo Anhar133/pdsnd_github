@@ -6,7 +6,7 @@ CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
 
-def get_filters():
+def get_filters(c):
     """
     Asks user to specify a city, month, and day to analyze.
 
@@ -15,48 +15,48 @@ def get_filters():
         (str) month - name of the month to filter by, or "all" to apply no month filter
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
     """
-    print('Hello! Let\'s explore some US bikeshare data!')
-  
+    print('Hello! ' + c +  ' Let\'s explore some US bikeshare data!')
+
     # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
 
     city_names = ["chicago","new york city","washington"]
 
     while True :
-       
+
             city = input("\nplease inter the city (chicago, new york city, washington)\n").lower()
             if city in city_names :
                break
             elif city not in city_names :
                print("sorry wrong inter ! ")
- 
+
 
     # TO DO: get user input for month (all, january, february, ... , june)
-    
+
     month_names = ["all" , "january", "february", "march", "april", "may" , "june"]
-    
+
     while True :
-     
+
             month = input("please inter the month (all , january, february, march, april, may , june)\n ").lower()
             if month in month_names :
                 break
             elif month not in month_names :
                 print("sorry wrong inter ! ")
-   
+
 
     # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
-    
+
     day_names = ["all" , "monday", "tuesday", "wednesday", "thursday" , "friday", "saturday", "sunday"]
-    
+
     while True :
-       
+
             day = input("\nplease inter the Day (all , monday, tuesday, wednesday, thursday , friday, saturday, sunday )\n ").lower()
             if day in day_names :
                 break
             elif day not in day_names :
                 print("sorry wrong inter ! ")
-            
-            
-    
+
+
+
     print('-'*40)
     return city, month, day
 
@@ -125,7 +125,7 @@ def time_stats(df):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
-    
+
 
 def station_stats(df):
     """Displays statistics on the most popular stations and trip."""
@@ -134,9 +134,9 @@ def station_stats(df):
     start_time = time.time()
 
     # TO DO: display most commonly used start station
-    
+
     commonly_stard_station = df['Start Station'].mode()[0]
-    
+
     print('The most common start_station is: ', commonly_stard_station)
 
     # TO DO: display most commonly used end station
@@ -161,12 +161,12 @@ def trip_duration_stats(df):
     # TO DO: display total travel time
     total_travel_time = df["Trip Duration"].count()
     print("the total travel time is : " ,total_travel_time)
-    
+
 
     # TO DO: display mean travel time
     mean_travel_time = df["Trip Duration"].mean()
     print("the mean travel time is : " ,mean_travel_time)
-    
+
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -191,14 +191,14 @@ def user_stats(df):
         print("the counts of user Gender\n" , gender)
     except:
         pass
-    
+
     # TO DO: Display earliest, most recent, and most common year of birth
     #exception for washington
     try:
         earliest = df['Birth Year'].min()
         most_recent = df['Birth Year'].max()
         most_common = df['Birth Year'].mode()[0]
-    
+
         print("the earliest year of birth" , earliest)
         print("the most recent year of birth" , most_recent)
         print("the common year of birth" , most_common)
@@ -210,7 +210,7 @@ def user_stats(df):
 
 def raw_data(df):
     check = ['yes','no']
-    
+
     while True :
         answer = input("Would you like to see 5 lines of raw data? enter yes or no\n ").lower()
         if answer not in check :
@@ -218,21 +218,22 @@ def raw_data(df):
         elif answer == "yes" :
             print(df.head())
         else :
-            break 
-         
-    
+            break
+
+
 def main():
+    c = input("inter your name : ")
     while True:
         city, month, day = get_filters()
         df = load_data(city, month, day)
 
         time_stats(df)
-        
+
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
         raw_data(df)
-        
+
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
             break
